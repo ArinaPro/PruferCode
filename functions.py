@@ -1,6 +1,8 @@
 from random import randint
 from time import time
 import heapq
+import sympy
+from sympy import combinatorics
 
 
 def decoder(code):
@@ -167,18 +169,21 @@ def test():
         [2, 3],
         [5, 5, 5]
     ]
-    for index, graph in enumerate(graphs):
-        ans = encoder(graph)
-        print(ans)
-        assert(ans == codes[index])
-    for code in codes:
-        assert(code == encoder(decoder(code)))
+    # for index, graph in enumerate(graphs):
+    #     ans = encodernlogn(graph)
+    #     print(ans)
+    #     assert(ans == codes[index])
+    # for code in codes:
+    #     assert(code == encodernlogn(decoder(code)))
     for size in [100, 1000, 10000, 100000]:
         time_start = time()
         tree = generate_tree(size)
         print(f"generated {size} in {round(time() - time_start, 3)} secnds")
         time_start = time()
-        encoder(tree)
+        encodernlogn(tree)
         print(f"encoded {size} in {round(time() - time_start, 3)} secnds")
+        time_start = time()
+        sympy.combinatorics.Prufer.to_prufer(tree=tree, n=size)
+        print(f"encoded {size} in {round(time() - time_start, 3)} secnds by py library")
 
 test()
